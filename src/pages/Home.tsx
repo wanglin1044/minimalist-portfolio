@@ -1,11 +1,10 @@
 import { motion } from 'motion/react';
 import { ArrowRight, Terminal } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
-interface HomeProps {
-  setCurrentPage: (page: string) => void;
-}
+export default function Home() {
+  const navigate = useNavigate();
 
-export default function Home({ setCurrentPage }: HomeProps) {
   return (
     <div className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20">
       <div className="max-w-3xl mx-auto text-center">
@@ -44,14 +43,14 @@ export default function Home({ setCurrentPage }: HomeProps) {
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <button 
-            onClick={() => setCurrentPage('projects')}
+            onClick={() => navigate('/projects')}
             className="w-full sm:w-auto px-8 py-3.5 bg-slate-900 text-white rounded-lg font-medium hover:bg-slate-800 transition-colors flex items-center justify-center gap-2"
           >
             View Projects
             <ArrowRight size={18} />
           </button>
           <button 
-            onClick={() => setCurrentPage('contact')}
+            onClick={() => navigate('/contact')}
             className="w-full sm:w-auto px-8 py-3.5 bg-white text-slate-900 border border-slate-200 rounded-lg font-medium hover:bg-slate-50 transition-colors"
           >
             Contact Me

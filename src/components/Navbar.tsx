@@ -1,53 +1,49 @@
-import { Code2, Github, Linkedin, Mail, Menu, X } from 'lucide-react';
+import { Code2, Github, Linkedin, Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import { NavLink, Link } from 'react-router-dom';
 
-interface NavbarProps {
-  currentPage: string;
-  setCurrentPage: (page: string) => void;
-}
-
-export default function Navbar({ currentPage, setCurrentPage }: NavbarProps) {
+export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'contact', label: 'Contact' },
+    { path: '/', label: 'Home' },
+    { path: '/about', label: 'About' },
+    { path: '/projects', label: 'Projects' },
+    { path: '/contact', label: 'Contact' },
   ];
 
-  const handleNavClick = (id: string) => {
-    setCurrentPage(id);
-    setIsMobileMenuOpen(false);
-  };
+  const closeMenu = () => setIsMobileMenuOpen(false);
 
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           {/* Logo */}
-          <div 
+          <Link 
+            to="/"
             className="flex items-center gap-2 cursor-pointer"
-            onClick={() => handleNavClick('home')}
+            onClick={closeMenu}
           >
             <div className="bg-slate-900 text-white p-1.5 rounded-lg">
               <Code2 size={20} />
             </div>
             <span className="font-semibold text-lg tracking-tight text-slate-900">DevFolio</span>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => handleNavClick(item.id)}
-                className={`text-sm font-medium transition-colors hover:text-slate-900 ${
-                  currentPage === item.id ? 'text-slate-900' : 'text-slate-500'
-                }`}
+              <NavLink
+                key={item.path}
+                to={item.path}
+                className={({ isActive }) =>
+                  `text-sm font-medium transition-colors hover:text-slate-900 ${
+                    isActive ? 'text-slate-900' : 'text-slate-500'
+                  }`
+                }
               >
                 {item.label}
-              </button>
+              </NavLink>
             ))}
             <div className="flex items-center gap-4 pl-4 border-l border-slate-200">
               <a href="#" className="text-slate-400 hover:text-slate-900 transition-colors">
@@ -76,17 +72,20 @@ export default function Navbar({ currentPage, setCurrentPage }: NavbarProps) {
         <div className="md:hidden bg-white border-b border-slate-200">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => handleNavClick(item.id)}
-                className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
-                  currentPage === item.id
-                    ? 'bg-slate-50 text-slate-900'
-                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                }`}
+              <NavLink
+                key={item.path}
+                to={item.path}
+                onClick={closeMenu}
+                className={({ isActive }) =>
+                  `block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
+                    isActive
+                      ? 'bg-slate-50 text-slate-900'
+                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                  }`
+                }
               >
                 {item.label}
-              </button>
+              </NavLink>
             ))}
           </div>
         </div>
